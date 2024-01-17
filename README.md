@@ -1,2 +1,3 @@
 # terraform
-Terraform configs for Fixie services.
+
+This repo contains terraform configurations for Fixie infrastructure.
