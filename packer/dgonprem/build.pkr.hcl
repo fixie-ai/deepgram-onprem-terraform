@@ -13,7 +13,7 @@ packer {
 }
 
 source "googlecompute" "dgonprem-packer-image" {
-  image_name         = "deepgram-onprem"
+  image_name         = "deepgram-onprem-{{timestamp}}"
   project_id          = "fixie-frame"
   source_image_family = "common-dl-gpu-debian-11"
   zone                = "us-west1-a"
@@ -54,5 +54,10 @@ build {
     script = "setup.sh"
   }
 
-
+  # Emit manifest.json file.
+  post-processor "manifest" {
+    output = "manifest.json"
+    strip_path = true
+  }
 }
+

@@ -40,10 +40,10 @@ sudo apt-get update -y
 sudo apt-get install docker-compose docker-compose-plugin -y
 
 # Disable Jupyter service, which is part of the base image we are using.
-sudo systemctl disable jupyter.service
-sudo systemctl stop jupyter.service
+sudo systemctl mask jupyter
+sudo systemctl stop jupyter
 
 # Ensure start script is run on instance boot.
 sudo cp /tmp/deepgram/config/deepgram.service /etc/systemd/system
 sudo systemctl daemon-reload
-sudo systemctl enable deepgram.service
+sudo systemctl enable deepgram
