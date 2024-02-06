@@ -1,0 +1,12 @@
+[Unit]
+Description=Start Deepgram service
+
+[Service]
+Type=simple
+ExecStart=/home/deepgram/config/start.sh
+User=deepgram
+Group=deepgram
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
