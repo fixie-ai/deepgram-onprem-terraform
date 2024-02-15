@@ -14,15 +14,14 @@ packer {
 
 source "googlecompute" "dgonprem-packer-image" {
   image_name         = "deepgram-onprem-{{timestamp}}"
-  project_id          = "fixie-frame"
+  project_id          = "YOUR-GCP-PROJECT-ID"
+  zone                = "us-west1-a"  # Or pick another zone if you prefer.
   source_image_family = "common-dl-gpu-debian-11"
-  zone                = "us-west1-a"
   image_description   = "Deepgram on-prem image built using Packer"
   ssh_username        = "root"
   machine_type        = "n1-standard-16"
-#  startup_script_file = "startup.sh"
   on_host_maintenance = "TERMINATE"
-  accelerator_type    = "https://www.googleapis.com/compute/v1/projects/fixie-frame/zones/us-west1-a/acceleratorTypes/nvidia-tesla-t4"
+  accelerator_type    = "https://www.googleapis.com/compute/v1/projects/YOUR-GCP-PROJECT-ID/zones/us-west1-a/acceleratorTypes/nvidia-tesla-t4"
   accelerator_count   = 1
   disk_size           = 50
   use_os_login        = true

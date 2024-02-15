@@ -1,8 +1,8 @@
 # Defines the Managed Instance Group for the Deepgram on-prem service.
 
 provider "google" {
-  project = "fixie-frame"
-  zone    =  "us-west1-a"
+  project = "YOUR-GCP-PROJECT-ID"
+  zone    =  "us-west1-a"  # Or another zone if you prefer.
 }
 
 # This image is created using Packer from the configs in packer/dgonprem.
@@ -10,7 +10,7 @@ provider "google" {
 # TO UPDATE THE IMAGE:
 #
 # 1. Edit the name field below to the new image name. This is in the `manifest.json`
-#    file left in the packer/dgonprem directory after a successful build.
+#    file left in the packer/ directory after a successful build.
 # 2. Comment out the `resource "google_compute_instance_group_manager" "mig" { ... }`
 #    block below.
 # 3. Do a `terraform apply`. This will delete the MIG and update the instance template.
@@ -22,7 +22,7 @@ provider "google" {
 # https://github.com/hashicorp/terraform-provider-google/issues/6376
   
 data "google_compute_image" "packer_image" {
-  name = "deepgram-onprem-1707253541"
+  name = "DEEPGRAM-ONPREM-IMAGE-FROM-PACKER"  # Replace with the Packer built image name.
 }
 
 # Instance template.
@@ -56,7 +56,7 @@ resource "google_compute_instance_template" "template" {
     access_config {
       network_tier = "PREMIUM"
     }
-    network     = "https://www.googleapis.com/compute/v1/projects/fixie-frame/global/networks/default"
+    network     = "https://www.googleapis.com/compute/v1/projects/YOUR-GCP-PROJECT-ID/global/networks/default"
     queue_count = "0"
     stack_type  = "IPV4_ONLY"
   }
@@ -74,7 +74,7 @@ resource "google_compute_instance_template" "template" {
   }
 
   service_account {
-    email  = "548385236069-compute@developer.gserviceaccount.com"
+    email  = "YOUR-GCP-SERVICE-ACCOUNT@developer.gserviceaccount.com"
     scopes = ["https://www.googleapis.com/auth/devstorage.read_only", "https://www.googleapis.com/auth/logging.write", "https://www.googleapis.com/auth/monitoring.write", "https://www.googleapis.com/auth/service.management.readonly", "https://www.googleapis.com/auth/servicecontrol", "https://www.googleapis.com/auth/trace.append"]
   }
 
@@ -90,7 +90,7 @@ resource "google_compute_instance_template" "template" {
 # The Managed Instance Group.
 resource "google_compute_instance_group_manager" "mig" {
   auto_healing_policies {
-    health_check      = "https://www.googleapis.com/compute/v1/projects/fixie-frame/global/healthChecks/dgonprem-mig-health-check-8080"
+    health_check      = "https://www.googleapis.com/compute/v1/projects/YOUR-GCP-PROJECT-ID/global/healthChecks/dgonprem-mig-health-check-8080"
     initial_delay_sec = "300"
   }
 
@@ -108,7 +108,7 @@ resource "google_compute_instance_group_manager" "mig" {
     port = "8080"
   }
 
-  project     = "fixie-frame"
+  project     = "YOUR-GCP-PROJECT-ID"
   target_size = "1"
 
   update_policy {

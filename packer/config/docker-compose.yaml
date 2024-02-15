@@ -8,7 +8,7 @@ services:
   api:
     image: quay.io/deepgram/onprem-api:release-240104
 
-    # Added 29 Jan 2024 for GCP logging.
+    # Ensure that Deepgram service logs are exported to GCP logging service.
     logging:
       driver: gcplogs
 
@@ -18,9 +18,9 @@ services:
     ports:
       - "8080:8080"
 
-    # Make sure you `export` your on-prem API key secret in your local environment
+    # EDIT THE FOLLOWING WITH YOUR DEEPGRAM API KEY.
     environment:  
-      DEEPGRAM_API_KEY: "f4fada601452ad0159e320b1dc78e5fcdd72800d"
+      DEEPGRAM_API_KEY: "your-deepgram-api-key"
 
     # The path on the left of the colon ':' should point to files/directories on the host machine.
     # The path on the right of the colon ':' is an in-container path. It must match the path
@@ -35,7 +35,7 @@ services:
   engine:
     image: quay.io/deepgram/onprem-engine:release-240104
 
-    # Added 29 Jan 2024 for GCP logging.
+    # Ensure that Deepgram service logs are exported to GCP logging service.
     logging:
       driver: gcplogs
 
@@ -45,9 +45,9 @@ services:
     ports:
       - "9991:9991"
 
-    # Make sure you `export` your on-prem API key secret in your local environment
-    environment:
-      DEEPGRAM_API_KEY: "f4fada601452ad0159e320b1dc78e5fcdd72800d"
+    # EDIT THE FOLLOWING WITH YOUR DEEPGRAM API KEY.
+    environment:  
+      DEEPGRAM_API_KEY: "your-deepgram-api-key"
 
     # The path on the left of the colon ':' should point to files/directories on the host machine.
     # The path on the right of the colon ':' is an in-container path.
